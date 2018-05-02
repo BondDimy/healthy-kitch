@@ -1,7 +1,6 @@
 
 .l-login {
   max-width: 320px;
-  margin: 50px auto;
   font-family: Campton-Light;
 
 }
@@ -12,6 +11,7 @@
   margin: 0;
   height: 100px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   position: relative;
@@ -133,3 +133,43 @@
     background-color: darken(#ddc9b8, 5%);
   }
 }
+
+.mat-form-field{
+  width: 263px;
+  font-family: Campton-Light;
+  font-size: 12px;
+}
+
+//.log-in__input-wrapper:nth-child(4){
+//  padding-top: 10px;
+//}
+//
+//.log-in__input-wrapper:nth-child(5){
+//  padding-top: 10px;
+//}
+
+.logo-text-up{
+  font-family: Campton-Light;
+  text-transform: uppercase;
+  font-size: 17px;
+  width: 100%;
+  text-align: center;
+}
+
+.logo-text-down{
+  font-family: Holland;
+  font-size: 15px;
+  margin-top: -40px;
+  width: 100%;
+  text-align: center;
+}
+
+//.ng-valid{
+//  .mat-input-wrapper{
+//    .mat-form-field-underline, .mat-input-underline{
+//      background-color: green !important;
+//    }
+//  }
+//}
+
+

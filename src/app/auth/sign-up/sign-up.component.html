@@ -2,9 +2,10 @@
   <div class="login-form-wrapper">
 
 
-    <p class="log-in__header">
-      <img src="../../../assets/img/logo.png" alt="" width="50%">
-    </p>
+    <div class="log-in__header">
+      <div class="logo-text-up">Healthy kitch</div>
+      <div class="logo-text-down">healthy doesn't need to bee bored</div>
+    </div>
 
     <div class="log-in-body">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -49,31 +50,30 @@
 
 
         <div class="log-in__input-wrapper">
-          <input matInput type="text"
-                 placeholder="Year of birth"
-                 formControlName="birthYear"
-                 required
-                 class="log-in__input"
-                 pattern="[0-9]*"
-          >
-          <div *ngIf="isFieldInvalid('birthYear')" class="invalid-error">
-            Enter your year of birth please
-          </div>
+          <mat-form-field>
+            <mat-select placeholder="Your year of birth" [formControl]="yearControl">
+              <mat-option *ngFor="let year of years" [value]="year">
+                {{year}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="yearControl.hasError('required')">Please choose your year of birth</mat-error>
+            <!--<mat-hint>{{animalControl.value?.sound}}</mat-hint>-->
+          </mat-form-field>
         </div>
 
 
 
 
         <div class="log-in__input-wrapper">
-          <input matInput type="text"
-                 placeholder="Gender"
-                 formControlName="gender"
-                 required
-                 class="log-in__input"
-          >
-          <div *ngIf="isFieldInvalid('gender')" class="invalid-error">
-            Choose gender
-          </div>
+          <mat-form-field>
+            <mat-select placeholder="Your gender" [formControl]="genderControl">
+              <mat-option *ngFor="let gender of genders" [value]="gender">
+                {{gender}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="genderControl.hasError('required')">Please choose your gender</mat-error>
+            <!--<mat-hint>{{animalControl.value?.sound}}</mat-hint>-->
+          </mat-form-field>
         </div>
 
 

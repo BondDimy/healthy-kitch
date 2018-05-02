@@ -20,7 +20,8 @@ import {UserService} from './user/user.service';
 import {AuthService} from './auth/auth.service';
 import {AuthGuard} from './auth/auth.guard';
 import {LocalStorageService} from './shared/services/local-storage/local-storage.service';
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatSelectModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -34,11 +35,13 @@ import {LocalStorageService} from './shared/services/local-storage/local-storage
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     BrowserModule,
     Angular2FontawesomeModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSelectModule,
     StoreModule.forRoot(rootReducer, {initialState}),
     routing
   ],

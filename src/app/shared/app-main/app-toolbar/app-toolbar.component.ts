@@ -7,9 +7,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppToolbarComponent implements OnInit {
 
+  loginOpen = false;
+  registerOpen = false;
+
   constructor() { }
 
   ngOnInit() {
   }
+
+  openRegister() {
+    this.loginOpen = true;
+    this.registerOpen = false;
+
+  }
+
+  openLogin() {
+    this.registerOpen = true;
+    this.loginOpen = false;
+  }
+
+  closeModals() {
+    if (this.registerOpen || this.loginOpen) {
+      this.registerOpen = false;
+      this.loginOpen = false;
+    }
+  }
+
 
 }

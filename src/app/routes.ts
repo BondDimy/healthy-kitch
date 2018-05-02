@@ -10,7 +10,7 @@ const appRoutes: Routes = [
   {
     path: '',
     component: AppMainComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     pathMatch: 'full'
   },
   {

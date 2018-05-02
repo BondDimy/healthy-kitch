@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../user/user.service';
 
 @Component({
@@ -12,6 +12,16 @@ export class SignUpComponent implements OnInit {
   form: FormGroup;
   private formSubmitAttempt: boolean;
   statusText: string = null;
+
+
+  yearControl = new FormControl('', [Validators.required]);
+  genderControl = new FormControl('', [Validators.required]);
+
+  years = [];
+  genders = [
+    'Male',
+    'Female'
+  ];
 
   constructor(private fb: FormBuilder,
               private authService: UserService) {
@@ -29,6 +39,7 @@ export class SignUpComponent implements OnInit {
       birthYear: ['', Validators.required],
       gender: ['', Validators.required],
     });
+    this.generateYears();
   }
 
   isFieldInvalid(field: string) {
@@ -49,6 +60,12 @@ export class SignUpComponent implements OnInit {
       }
     }
     this.formSubmitAttempt = true;
+  }
+
+  generateYears() {
+    for (let i = new Date().getFullYear(); i >= 1940; i--) {
+      this.years.push(i);
+    }
   }
 
 }

@@ -1,11 +1,12 @@
 <div class="header-wrapper">
   <div class="logo-wrapper">
-    <img src="../../../../assets/img/logo.png" alt="">
+    <div class="logo-text-up">Healthy kitch</div>
+    <div class="logo-text-down">healthy doesn't need to bee bored</div>
   </div>
   <div class="header-right-side">
     <div class="header__auth-wrapper">
-      <span [routerLink]="'auth/sign-up'">Register</span>
-      <span [routerLink]="'auth/login'">Log in</span>
+      <span (click)="openRegister()">Register</span>
+      <span (click)="openLogin()">Log in</span>
     </div>
     <div class="header__socials-wrapper">
       <div class="header__socials-title">stay connected</div>
@@ -26,3 +27,10 @@
     </div>
   </div>
 </div>
+
+<div class="modals-wrapper" *ngIf="registerOpen || loginOpen" (click)="closeModals()">
+  <app-log-in *ngIf="registerOpen"></app-log-in>
+  <app-sign-up *ngIf="loginOpen"></app-sign-up>
+</div>
+
+

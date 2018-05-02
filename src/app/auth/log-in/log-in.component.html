@@ -2,9 +2,10 @@
   <div class="login-form-wrapper">
 
 
-    <p class="log-in__header">
-      <img src="../../../assets/img/logo.png" alt="" width="50%">
-    </p>
+    <div class="log-in__header">
+      <div class="logo-text-up">Healthy kitch</div>
+      <div class="logo-text-down">healthy doesn't need to bee bored</div>
+    </div>
 
     <div class="log-in-body">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -40,8 +41,6 @@
         </div>
 
 
-
-
         <div class="log-in__btn-container">
           <div class="log-in__status-text" *ngIf="statusText !== null">
             {{statusText}}
@@ -54,8 +53,6 @@
         Do not have an account? <a routerLink="/auth/sign-up">create account</a>
       </div>
     </div>
-
-
 
 
   </div>
