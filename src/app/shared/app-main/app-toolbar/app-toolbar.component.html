@@ -21,16 +21,16 @@
           <div class="header__socials-link"><i class="fa fa-twitter" aria-hidden="true"></i></div>
         </a>
         <a href="https://www.youtube.com">
-          <div class="header__socials-link"><i class="fa fa-youtube-play" aria-hidden="true"></i> </div>
+          <div class="header__socials-link"><i class="fa fa-youtube-play" aria-hidden="true"></i></div>
         </a>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modals-wrapper" *ngIf="registerOpen || loginOpen" (click)="closeModals()">
-  <app-log-in *ngIf="registerOpen"></app-log-in>
-  <app-sign-up *ngIf="loginOpen"></app-sign-up>
-</div>
+<div class="modals-wrapper" *ngIf="registerOpen || loginOpen" (click)="closeModals()"></div>
+
+<app-log-in *ngIf="registerOpen"></app-log-in>
+<app-sign-up *ngIf="loginOpen"></app-sign-up>
 
 
