@@ -22,6 +22,7 @@ import {AuthGuard} from './auth/auth.guard';
 import {LocalStorageService} from './shared/services/local-storage/local-storage.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSelectModule} from '@angular/material';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {MatSelectModule} from '@angular/material';
     SideNavComponent,
     LogInComponent,
     ResetComponent,
-    SignUpComponent
+    SignUpComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
