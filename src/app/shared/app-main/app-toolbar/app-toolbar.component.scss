@@ -31,6 +31,10 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: all 0.3s;
+  &:hover{
+    background-color: darken(#ddc9b8, 5%);
+  }
   i{
     color: #fff;
   }
@@ -92,7 +96,7 @@ app-sign-up{
 
 .modals-wrapper{
   width: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   height: 100%;
   background-color: rgba(99, 91, 91, 0.5);;
@@ -131,5 +135,8 @@ app-sign-up{
     width: 20px;
     height: 20px;
     font-size: 13px;
+  }
+  .logo-text-up, .logo-text-down{
+    font-size: 17px;
   }
 }

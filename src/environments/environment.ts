@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  // apiUrl: ''
+  apiUrl: 'http://adolfotrove.ddns.net:8085/'
 };

@@ -21,8 +21,13 @@ import {AuthService} from './auth/auth.service';
 import {AuthGuard} from './auth/auth.guard';
 import {LocalStorageService} from './shared/services/local-storage/local-storage.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatSelectModule} from '@angular/material';
 import { HomeComponent } from './home/home.component';
+import {HomeService} from './home/home.service';
+import {RecipeComponent} from './shared/recipe/recipe.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import {MatSelectModule, MatSidenav, MatSidenavContainer, MatSidenavContent, MatSidenavModule} from '@angular/material';
+import { SideMenuComponent } from './shared/side-menu/side-menu.component';
+import {NgHttpLoaderModule} from 'ng-http-loader/ng-http-loader.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +38,10 @@ import { HomeComponent } from './home/home.component';
     LogInComponent,
     ResetComponent,
     SignUpComponent,
-    HomeComponent
+    HomeComponent,
+    RecipeComponent,
+    FooterComponent,
+    SideMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -44,10 +52,13 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatSidenavModule,
+    HttpClientModule,
+    NgHttpLoaderModule,
     StoreModule.forRoot(rootReducer, {initialState}),
     routing
   ],
-  providers: [UserService, AuthService, AuthGuard, LocalStorageService],
+  providers: [UserService, AuthService, AuthGuard, LocalStorageService, HomeService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

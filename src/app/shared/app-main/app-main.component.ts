@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 
 @Component({
@@ -8,9 +8,17 @@ import {FormControl, Validators} from '@angular/forms';
 })
 export class AppMainComponent implements OnInit {
 
-  constructor() { }
+  menuOpened = false;
+
+  constructor() {
+  }
 
   ngOnInit() {
+  }
+
+  onOpen(e) {
+    console.log(this.menuOpened);
+    this.menuOpened = !this.menuOpened;
   }
 
 }

@@ -4,19 +4,72 @@
     <div class="home__search-wrapper">
       <div class="home__search-open--btn">
 
-        <span class="home__search-show-more--text">
+        <span class="home__search-show-more--text" (click)="openAdvancedSearch()">
           advanced search
         </span>
 
-        <span class="home__search-show-more--btn">
-          <i class="fa fa-angle-down" aria-hidden="true"></i>
+        <span class="home__search-show-more--btn" (click)="openAdvancedSearch()">
+          <i class="fa fa-angle-down" aria-hidden="true" *ngIf="!advancedSearchExpanded"></i>
+           <i class="fa fa-angle-up" aria-hidden="true" *ngIf="advancedSearchExpanded"></i>
         </span>
+
+
+        <div class="home__advanced-search-wrapper" *ngIf="advancedSearchExpanded">
+
+          <div class="home__advanced-search-column">
+            <div class="home__advanced-search-column-title">categories</div>
+            <div class="home__advanced-search-column-item" *ngFor="let item of allMealTypes">
+              <label class="container">{{item.name}}
+                <input type="checkbox" (change)="chooseCategories(item, $event)">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="home__advanced-search-column">
+            <div class="home__advanced-search-column-title">dietary requirements</div>
+            <div class="home__advanced-search-column-item" *ngFor="let item of dietaryRequirements">
+
+              <label class="container">{{item.name}}
+                <input type="checkbox" (change)="chooseDietary(item, $event)">
+                <span class="checkmark"></span>
+              </label>
+
+            </div>
+          </div>
+
+          <div class="home__advanced-search-column">
+            <div class="home__advanced-search-column-title">health benefits</div>
+            <div class="home__advanced-search-column-item" *ngFor="let item of healthBenefits">
+              <label class="container">{{item.name}}
+                <input type="checkbox" (change)="chooseBenefits(item, $event)">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="home__advanced-search-column">
+            <div class="home__advanced-search-column-title">cuisines</div>
+            <div class="home__advanced-search-column-item" *ngFor="let item of cuisines">
+              <label class="container">{{item.name}}
+                <input type="checkbox" (change)="chooseCuisines(item, $event)">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </div>
+
+          <button class="home__advanced-search-submit" (click)="submitSearch()">
+            search
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </button>
+
+        </div>
 
       </div>
 
-      <input type="text" class="home__search-input" placeholder="search">
+      <input type="text" class="home__search-input" placeholder="search" [(ngModel)]="searchString">
 
-      <div class="home__search-submit-wrapper">
+      <div class="home__search-submit-wrapper" (click)="submitSearch()">
         <span><i class="fa fa-search" aria-hidden="true"></i></span>
       </div>
 
@@ -25,53 +78,80 @@
   </div>
 
   <div class="home__search-main--wrapper">
+
     <div class="home__search-results">
 
       <div class="border-search-top"></div>
 
-      <div class="home__search-meal-types--wrapper">
-        <div class="home__search-meal-types--item">
-          breakfast
-        </div>
-        <div class="home__search-meal-types--item">
-          lunch
-        </div>
-        <div class="home__search-meal-types--item">
-          diner
+      <div class="home__back-btn" *ngIf="recipes.length > 0" (click)="backToHomePage()">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        back
+      </div>
+
+      <div class="home__search-meal-types-container" *ngIf="recipes.length <= 0">
+        <div class="home__search-meal-types--wrapper" *ngFor="let item of allMealTypes">
+          <div class="home__search-meal-types--item">
+            {{item.name}}
+          </div>
         </div>
       </div>
 
-      <div class="home__search-meal-types--wrapper">
-        <div class="home__search-meal-types--item">
-          breakfast
+
+      <div class="home__trending-wrapper" *ngIf="recipes.length <= 0">
+        <div class="home__trending-title">What's trending</div>
+
+        <div class="home__trending-list--wrapper">
+
+
+          <div *ngFor="let item of trendings; let i = index" class="home__trending-list--item">
+            <app-recipe
+              [name]="item.name"
+              [description]="item.description"
+              [imgLink]="item.imgLink"
+              *ngIf="i<3"
+            ></app-recipe>
+          </div>
+
+
         </div>
-        <div class="home__search-meal-types--item">
-          lunch
-        </div>
-        <div class="home__search-meal-types--item">
-          diner
+
+        <p class="home__trending-view-all--wrapper">
+          <span class="home__trending-view-all" (click)="searchInTrending()">view all</span>
+        </p>
+      </div>
+
+
+      <div class="home__search-meal-types-container" *ngIf="recipes.length > 0">
+        <div *ngFor="let item of recipes; let i = index">
+          <app-recipe
+            [name]="item.name"
+            [description]="item.description"
+            [imgLink]="item.imgLink"
+          ></app-recipe>
         </div>
       </div>
+
 
     </div>
 
     <div class="home__search-right--side">
 
-      <div class="border-search-right-side-top"></div>
 
       <div class="home__search-ingredients-search--wrapper">
 
         <div class="home__search-ingredients-search">
 
+          <img src="../../assets/img/build-a-meal.png" alt="" width="350px">
+
+
           <div class="home__search-ingredients-search__inputs-wrapper">
-            <!--<img src="../../assets/img/build-a-meal.png" alt="">-->
             <div class="home__search-ingredients-search__inputs-text">
               Create wholesome dishes with ingredients already in your pantry
             </div>
-            <input type="text" placeholder="e.g Chicken">
-            <input type="text" placeholder="e.g Rice">
-            <input type="text" placeholder="e.g Cheese">
-            <div class="home__search-ingredients-search-submit">
+            <input type="text" placeholder="e.g Chicken" [(ngModel)]="buildMealFirstItem">
+            <input type="text" placeholder="e.g Rice" [(ngModel)]="buildMealSecondItem">
+            <input type="text" placeholder="e.g Cheese" [(ngModel)]="buildMealThirdItem">
+            <div class="home__search-ingredients-search-submit" (click)="buildMealSearch()">
               find recipes
             </div>
           </div>
@@ -84,6 +164,6 @@
 
   </div>
 
-
+  <div class="home__some-section"></div>
 
 </div>
