@@ -57,11 +57,11 @@ export class HomeComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // this.allMealTypes = await this.homeService.getMealTypes();
-    // this.trendings = await this.homeService.getTrandingRecipes();
-    // this.dietaryRequirements = await this.homeService.getDietaryCategories();
-    // this.healthBenefits = await this.homeService.getHealthBenefits();
-    // this.cuisines = await this.homeService.getCuisines();
+    this.allMealTypes = await this.homeService.getMealTypes();
+    this.trendings = await this.homeService.getTrandingRecipes();
+    this.dietaryRequirements = await this.homeService.getDietaryCategories();
+    this.healthBenefits = await this.homeService.getHealthBenefits();
+    this.cuisines = await this.homeService.getCuisines();
     // console.log('home', await this.homeService.getMealTypes());
   }
 
@@ -107,14 +107,14 @@ export class HomeComponent implements OnInit {
 
   async submitSearch() {
     const strings = [];
-    // strings.push(this.searchString);
-    // this.recipes = await this.homeService.getRecipesWithFilters(
-    //   strings,
-    //   this.categoriesToSearch,
-    //   this.cuisinesToSearch,
-    //   this.benefitsToSerach,
-    //   this.dietaryRequirementsToSearch
-    // );
+    strings.push(this.searchString);
+    this.recipes = await this.homeService.getRecipesWithFilters(
+      strings,
+      this.categoriesToSearch,
+      this.cuisinesToSearch,
+      this.benefitsToSerach,
+      this.dietaryRequirementsToSearch
+    );
     this.advancedSearchExpanded = false;
   }
 
