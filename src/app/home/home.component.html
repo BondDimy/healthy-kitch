@@ -1,4 +1,5 @@
 <div class="home__wrapper">
+
   <div class="home__wrapper-img">
 
     <div class="home__search-wrapper">
@@ -19,8 +20,10 @@
           <div class="home__advanced-search-column">
             <div class="home__advanced-search-column-title">categories</div>
             <div class="home__advanced-search-column-item" *ngFor="let item of allMealTypes">
-              <label class="container">{{item.name}}
-                <input type="checkbox" (change)="chooseCategories(item, $event)">
+              <label class="container">
+                {{item.name}}
+
+                <input type="checkbox" [(checked)]="item.checked" (change)="chooseCategories(item, $event)">
                 <span class="checkmark"></span>
               </label>
             </div>
@@ -28,10 +31,11 @@
 
           <div class="home__advanced-search-column">
             <div class="home__advanced-search-column-title">dietary requirements</div>
-            <div class="home__advanced-search-column-item" *ngFor="let item of dietaryRequirements">
+            <div class="home__advanced-search-column-item" *ngFor="let req of dietaryRequirements">
 
-              <label class="container">{{item.name}}
-                <input type="checkbox" (change)="chooseDietary(item, $event)">
+              <label class="container">
+                {{req.name}}
+                <input type="checkbox" [(checked)]="req.checked" (change)="chooseDietary(req, $event)">
                 <span class="checkmark"></span>
               </label>
 
@@ -41,8 +45,9 @@
           <div class="home__advanced-search-column">
             <div class="home__advanced-search-column-title">health benefits</div>
             <div class="home__advanced-search-column-item" *ngFor="let item of healthBenefits">
-              <label class="container">{{item.name}}
-                <input type="checkbox" (change)="chooseBenefits(item, $event)">
+              <label class="container">
+                {{item.name}}
+                <input type="checkbox" [(checked)]="item.checked" (change)="chooseBenefits(item, $event)">
                 <span class="checkmark"></span>
               </label>
             </div>
@@ -51,8 +56,9 @@
           <div class="home__advanced-search-column">
             <div class="home__advanced-search-column-title">cuisines</div>
             <div class="home__advanced-search-column-item" *ngFor="let item of cuisines">
-              <label class="container">{{item.name}}
-                <input type="checkbox" (change)="chooseCuisines(item, $event)">
+              <label class="container">
+                {{item.name}}
+                <input type="checkbox" [(checked)]="item.checked" (change)="chooseCuisines(item, $event)">
                 <span class="checkmark"></span>
               </label>
             </div>
@@ -83,21 +89,25 @@
 
       <div class="border-search-top"></div>
 
-      <div class="home__back-btn" *ngIf="recipes.length > 0" (click)="backToHomePage()">
+      <div class="home__back-btn" *ngIf="showResultsBlock" (click)="backToHomePage()">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
         back
       </div>
 
-      <div class="home__search-meal-types-container" *ngIf="recipes.length <= 0">
+      <div class="home__search-meal-types-container" *ngIf="!showResultsBlock">
         <div class="home__search-meal-types--wrapper" *ngFor="let item of allMealTypes">
-          <div class="home__search-meal-types--item">
-            {{item.name}}
+          <div class="home__search-meal-types--item" (click)="searchType(item)">
+            <img [src]="'http://adolfotrove.ddns.net:8085/files/Images/' + item.image.id" class="meal-types-img">
+            <div class="meal-types-text">
+              {{item.name}}
+            </div>
+
           </div>
         </div>
       </div>
 
 
-      <div class="home__trending-wrapper" *ngIf="recipes.length <= 0">
+      <div class="home__trending-wrapper" *ngIf="!showResultsBlock">
         <div class="home__trending-title">What's trending</div>
 
         <div class="home__trending-list--wrapper">
@@ -121,14 +131,21 @@
       </div>
 
 
-      <div class="home__search-meal-types-container" *ngIf="recipes.length > 0">
-        <div *ngFor="let item of recipes; let i = index">
-          <app-recipe
-            [name]="item.name"
-            [description]="item.description"
-            [imgLink]="item.imgLink"
-          ></app-recipe>
+      <div *ngIf="showResultsBlock">
+        <div class="home__search-meal-types-container" *ngIf="recipes[0]">
+          <div *ngFor="let item of recipes; let i = index">
+            <app-recipe
+              [name]="item.name"
+              [description]="item.description"
+              [imgLink]="'http://adolfotrove.ddns.net:8085/files/RecipeImage/'+ item.defaultImageID +'?quality=3'"
+            ></app-recipe>
+          </div>
         </div>
+
+        <h2 *ngIf="!recipes[0]">
+          No recipes found
+        </h2>
+
       </div>
 
 
@@ -167,3 +184,5 @@
   <div class="home__some-section"></div>
 
 </div>
+
+<div class="close-wrapper" *ngIf="advancedSearchExpanded" (click)="closeAdvancedSearch()"></div>

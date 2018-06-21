@@ -1,6 +1,6 @@
 <div class="recipe__wrapper">
   <!--<div class="recipe__img-wrapper">-->
-  <img src={{imgLink}} alt="" width="260px" *ngIf="imgLink">
+  <img src={{imgLink}} alt="" width="100%" height="100%" *ngIf="imgLink" class="recipe__img-wrapper">
   <div *ngIf="!imgLink" class="recipe-no-img">{{name}}</div>
   <!--</div>-->
   <div class="recipe-title">{{name}}</div>

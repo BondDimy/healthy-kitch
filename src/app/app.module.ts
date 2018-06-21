@@ -28,6 +28,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import {MatSelectModule, MatSidenav, MatSidenavContainer, MatSidenavContent, MatSidenavModule} from '@angular/material';
 import { SideMenuComponent } from './shared/side-menu/side-menu.component';
 import {NgHttpLoaderModule} from 'ng-http-loader/ng-http-loader.module';
+import {RestService} from './rest.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,7 @@ import {NgHttpLoaderModule} from 'ng-http-loader/ng-http-loader.module';
     StoreModule.forRoot(rootReducer, {initialState}),
     routing
   ],
-  providers: [UserService, AuthService, AuthGuard, LocalStorageService, HomeService],
+  providers: [UserService, AuthService, AuthGuard, LocalStorageService, HomeService, RestService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

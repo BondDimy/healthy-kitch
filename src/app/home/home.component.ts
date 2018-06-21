@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {HomeService} from './home.service';
 import {ICategory} from '../../models/ICategory';
 import {IRecipe} from '../../models/IRecipe';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {RestService} from '../rest.service';
 
 @Component({
   selector: 'app-home',
@@ -28,11 +31,11 @@ export class HomeComponent implements OnInit {
     // }
   ];
 
-  dietaryRequirements: ICategory [] = [];
+  dietaryRequirements;
 
-  healthBenefits: ICategory [] = [];
+  healthBenefits;
 
-  cuisines: ICategory [] = [];
+  cuisines;
 
   searchString;
 
@@ -53,59 +56,81 @@ export class HomeComponent implements OnInit {
 
   trendings: IRecipe [];
 
-  constructor(private homeService: HomeService) {
+  showResultsBlock = false;
+
+  private baseUrl = `${environment.apiUrl}api/recipes`;
+
+  constructor(private homeService: HomeService, private http: HttpClient, private rest: RestService) {
   }
 
   async ngOnInit() {
-    this.allMealTypes = await this.homeService.getMealTypes();
     this.trendings = await this.homeService.getTrandingRecipes();
-    this.dietaryRequirements = await this.homeService.getDietaryCategories();
-    this.healthBenefits = await this.homeService.getHealthBenefits();
-    this.cuisines = await this.homeService.getCuisines();
-    // console.log('home', await this.homeService.getMealTypes());
+    this.loadMealTypes();
+    this.loadDietaryCategories();
+    this.loadHealthBenefits();
+    this.loadCuisines();
   }
 
   openAdvancedSearch() {
     this.advancedSearchExpanded = !this.advancedSearchExpanded;
-    this.dietaryRequirementsToSearch = [];
-    this.benefitsToSerach = [];
-    this.cuisinesToSearch = [];
+  }
+
+  closeAdvancedSearch() {
+    this.advancedSearchExpanded = false;
     this.categoriesToSearch = [];
+    this.cuisinesToSearch = [];
+    this.benefitsToSerach = [];
+    this.dietaryRequirementsToSearch = [];
+
+    this.loadMealTypes();
+    this.loadDietaryCategories();
+    this.loadHealthBenefits();
+    this.loadCuisines();
+
   }
 
   chooseDietary(item, checked) {
     if (checked.srcElement.checked) {
       this.dietaryRequirementsToSearch.push(item.id);
+      item.checked = true;
     } else {
-      this.dietaryRequirementsToSearch = this.dietaryRequirementsToSearch.filter(e => e.name !== item.name);
+      this.dietaryRequirementsToSearch = this.dietaryRequirementsToSearch.filter(e => e !== item.id);
+      item.checked = false;
     }
   }
 
   chooseBenefits(item, checked) {
     if (checked.srcElement.checked) {
       this.benefitsToSerach.push(item.id);
+      item.checked = true;
     } else {
-      this.benefitsToSerach = this.benefitsToSerach.filter(e => e.name !== item.name);
+      this.benefitsToSerach = this.benefitsToSerach.filter(e => e !== item.id);
+      item.checked = false;
     }
   }
 
   chooseCuisines(item, checked) {
     if (checked.srcElement.checked) {
       this.cuisinesToSearch.push(item.id);
+      item.checked = true;
     } else {
-      this.cuisinesToSearch = this.cuisinesToSearch.filter(e => e.name !== item.name);
+      this.cuisinesToSearch = this.cuisinesToSearch.filter(e => e !== item.id);
+      item.checked = false;
     }
   }
 
   chooseCategories(item, checked) {
     if (checked.srcElement.checked) {
       this.categoriesToSearch.push(item.id);
+      item.checked = true;
     } else {
-      this.categoriesToSearch = this.categoriesToSearch.filter(e => e.name !== item.name);
+      this.categoriesToSearch = this.categoriesToSearch.filter(e => e !== item.id);
+      item.checked = false;
     }
   }
 
   async submitSearch() {
+    this.advancedSearchExpanded = false;
     const strings = [];
     strings.push(this.searchString);
     this.recipes = await this.homeService.getRecipesWithFilters(
@@ -115,7 +140,6 @@ export class HomeComponent implements OnInit {
       this.benefitsToSerach,
       this.dietaryRequirementsToSearch
     );
-    this.advancedSearchExpanded = false;
   }
 
   async searchInTrending() {
@@ -129,6 +153,7 @@ export class HomeComponent implements OnInit {
     this.buildMealFirstItem = '';
     this.buildMealSecondItem = '';
     this.buildMealThirdItem = '';
+    this.showResultsBlock = false;
   }
 
   async buildMealSearch() {
@@ -141,4 +166,73 @@ export class HomeComponent implements OnInit {
       []
     );
   }
+
+  searchType(item) {
+    this.http.get<IRecipe[]>(`${this.baseUrl}/recipes`,
+      {
+        params: {
+          'mealTypesID': item.id,
+        }
+      }
+    ).subscribe(res => {
+      this.searchString = '';
+      this.buildMealFirstItem = '';
+      this.buildMealSecondItem = '';
+      this.buildMealThirdItem = '';
+      this.recipes = res;
+      this.showResultsBlock = true;
+    });
+  }
+
+
+  loadMealTypes() {
+    this.rest.apiGet('api/recipes/allMealTypes').subscribe((res: any[]) => {
+        this.allMealTypes = res.map(e => {
+          return {
+            ...e,
+            checked: false
+          };
+        });
+        console.log('this.allMealTypes', this.allMealTypes);
+      }
+    );
+  }
+
+  loadDietaryCategories() {
+    this.rest.apiGet('api/recipes/allDietaryCategories').subscribe((res: any[]) => {
+        this.dietaryRequirements = res.map(e => {
+          return {
+            ...e,
+            checked: false
+          };
+        });
+      }
+    );
+  }
+
+  loadHealthBenefits() {
+    this.rest.apiGet('api/recipes/allNutritionalBenefits').subscribe((res: any[]) => {
+        this.healthBenefits = res.map(e => {
+          return {
+            ...e,
+            checked: false
+          };
+        });
+      }
+    );
+  }
+
+  loadCuisines() {
+    this.rest.apiGet('api/recipes/allCuisines').subscribe((res: any[]) => {
+        this.cuisines = res.map(e => {
+          return {
+            ...e,
+            checked: false
+          };
+        });
+      }
+    );
+  }
+
+
 }
