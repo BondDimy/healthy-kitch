@@ -337,6 +337,18 @@
   width: 100%;
 }
 
+
+.home__search-res-wrapp{
+  margin-right: 20px;
+}
+
+.home__search-res-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+
 //checkbox
 
 /* The container */
@@ -474,5 +486,8 @@
   }
   .home__search-meal-types-container{
     justify-content: center;
+  }
+  .meal-types-img{
+    width: 90%;
   }
 }

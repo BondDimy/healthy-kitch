@@ -95,15 +95,20 @@
       </div>
 
       <div class="home__search-meal-types-container" *ngIf="!showResultsBlock">
+
         <div class="home__search-meal-types--wrapper" *ngFor="let item of allMealTypes">
+
           <div class="home__search-meal-types--item" (click)="searchType(item)">
+
             <img [src]="'http://adolfotrove.ddns.net:8085/files/Images/' + item.image.id" class="meal-types-img">
             <div class="meal-types-text">
               {{item.name}}
             </div>
 
           </div>
+
         </div>
+
       </div>
 
 
@@ -132,8 +137,8 @@
 
 
       <div *ngIf="showResultsBlock">
-        <div class="home__search-meal-types-container" *ngIf="recipes[0]">
-          <div *ngFor="let item of recipes; let i = index">
+        <div class="home__search-res-container" *ngIf="recipes[0]">
+          <div *ngFor="let item of recipes; let i = index" class="home__search-res-wrapp">
             <app-recipe
               [name]="item.name"
               [description]="item.description"
