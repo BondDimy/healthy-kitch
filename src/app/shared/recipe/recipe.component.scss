@@ -1,6 +1,9 @@
-.recipe__img-wrapper{
+.img-wrapper{
   width: 260px;
   height: 330px;
+  display: flex;
+  align-items: center;
+  background-color: #eeeeee;
 }
 
 .recipe__wrapper{

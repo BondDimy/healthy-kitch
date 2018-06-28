@@ -117,7 +117,7 @@
             <app-recipe
               [name]="item.name"
               [description]="item.description"
-              [imgLink]="item.imgLink"
+              [imgLink]="'http://adolfotrove.ddns.net:8085/files/RecipeImage/'+ item.defaultImageID +'?quality=3'"
               *ngIf="i<3"
             ></app-recipe>
           </div>

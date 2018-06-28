@@ -65,6 +65,7 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
     this.trendings = await this.homeService.getTrandingRecipes();
+    console.log('this.trendings', this.trendings);
     this.loadMealTypes();
     this.loadDietaryCategories();
     this.loadHealthBenefits();
@@ -77,15 +78,15 @@ export class HomeComponent implements OnInit {
 
   closeAdvancedSearch() {
     this.advancedSearchExpanded = false;
-    this.categoriesToSearch = [];
-    this.cuisinesToSearch = [];
-    this.benefitsToSerach = [];
-    this.dietaryRequirementsToSearch = [];
+    // this.categoriesToSearch = [];
+    // this.cuisinesToSearch = [];
+    // this.benefitsToSerach = [];
+    // this.dietaryRequirementsToSearch = [];
 
-    this.loadMealTypes();
-    this.loadDietaryCategories();
-    this.loadHealthBenefits();
-    this.loadCuisines();
+    // this.loadMealTypes();
+    // this.loadDietaryCategories();
+    // this.loadHealthBenefits();
+    // this.loadCuisines();
 
   }
 
@@ -140,11 +141,12 @@ export class HomeComponent implements OnInit {
       this.benefitsToSerach,
       this.dietaryRequirementsToSearch
     );
+    this.showResultsBlock = true;
   }
 
   async searchInTrending() {
     this.recipes = await this.homeService.getTrandingRecipes();
-    console.log(this.recipes);
+    this.showResultsBlock = true;
   }
 
   backToHomePage() {
@@ -181,6 +183,9 @@ export class HomeComponent implements OnInit {
       this.buildMealThirdItem = '';
       this.recipes = res;
       this.showResultsBlock = true;
+      this.allMealTypes.forEach(e => {
+        e.checked = e.id === item.id;
+      });
     });
   }
 
