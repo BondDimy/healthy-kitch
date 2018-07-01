@@ -13,24 +13,6 @@ import {RestService} from '../rest.service';
 })
 export class HomeComponent implements OnInit {
 
-  categories: ICategory [] = [
-    // {
-    //   name: 'lunch',
-    // },
-    // {
-    //   name: 'dinner',
-    // },
-    // {
-    //   name: 'desserts',
-    // },
-    // {
-    //   name: 'snacks',
-    // },
-    // {
-    //   name: 'beverages',
-    // }
-  ];
-
   dietaryRequirements;
 
   healthBenefits;
@@ -65,7 +47,7 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
     this.trendings = await this.homeService.getTrandingRecipes();
-    console.log('this.trendings', this.trendings);
+    // console.log('this.trendings', this.trendings);
     this.loadMealTypes();
     this.loadDietaryCategories();
     this.loadHealthBenefits();
@@ -167,6 +149,8 @@ export class HomeComponent implements OnInit {
       [],
       []
     );
+    this.showResultsBlock = true;
+    // console.log('this.recipes', this.recipes);
   }
 
   searchType(item) {
