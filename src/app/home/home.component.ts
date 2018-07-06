@@ -150,7 +150,9 @@ export class HomeComponent implements OnInit {
       []
     );
     this.showResultsBlock = true;
-    // console.log('this.recipes', this.recipes);
+    this.allMealTypes.forEach(e => {
+      e.checked = false;
+    });
   }
 
   searchType(item) {
