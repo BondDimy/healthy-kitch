@@ -153,13 +153,13 @@ export class HomeComponent implements OnInit {
     this.allMealTypes.forEach(e => {
       e.checked = false;
     });
-    this.dietaryRequirementsToSearch.forEach(e => {
+    this.dietaryRequirements.forEach(e => {
       e.checked = false;
     });
-    this.benefitsToSerach.forEach(e => {
+    this.healthBenefits.forEach(e => {
       e.checked = false;
     });
-    this.cuisinesToSearch.forEach(e => {
+    this.cuisines.forEach(e => {
       e.checked = false;
     });
   }
