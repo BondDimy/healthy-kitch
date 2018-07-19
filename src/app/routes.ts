@@ -5,13 +5,18 @@ import {LogInComponent} from './auth/log-in/log-in.component';
 import {ResetComponent} from './auth/reset/reset.component';
 import {SignUpComponent} from './auth/sign-up/sign-up.component';
 import {AuthGuard} from './auth/auth.guard';
+import {AddRecipeComponent} from './add-recipe/add-recipe.component';
+import {HomeComponent} from './home/home.component';
 
 const appRoutes: Routes = [
   {
     path: '',
     component: AppMainComponent,
     // canActivate: [AuthGuard],
-    pathMatch: 'full'
+    children: [
+      {path: '', component: HomeComponent, pathMatch: 'full'},
+      {path: 'add-recipe', component: AddRecipeComponent, pathMatch: 'full'},
+    ]
   },
   {
     path: 'auth',

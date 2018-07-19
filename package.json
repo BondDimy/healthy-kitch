@@ -29,7 +29,9 @@
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
     "ng-http-loader": "^0.9.1",
+    "ng-multiselect-dropdown": "^0.2.0",
     "ng2-cookies": "^1.0.12",
+    "ngx-image-cropper": "^1.0.1",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
   },

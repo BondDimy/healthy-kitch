@@ -9,9 +9,9 @@ import {SideNavComponent} from './shared/app-main/side-nav/side-nav.component';
 import {routing} from './routes';
 import {HttpClientModule} from '@angular/common/http';
 import {Angular2FontawesomeModule} from 'angular2-fontawesome';
-import { LogInComponent } from './auth/log-in/log-in.component';
-import { ResetComponent } from './auth/reset/reset.component';
-import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import {LogInComponent} from './auth/log-in/log-in.component';
+import {ResetComponent} from './auth/reset/reset.component';
+import {SignUpComponent} from './auth/sign-up/sign-up.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {initialState} from './store/initialState';
 import {rootReducer} from './store/reducers/rootReducer';
@@ -21,14 +21,17 @@ import {AuthService} from './auth/auth.service';
 import {AuthGuard} from './auth/auth.guard';
 import {LocalStorageService} from './shared/services/local-storage/local-storage.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { HomeComponent } from './home/home.component';
+import {HomeComponent} from './home/home.component';
 import {HomeService} from './home/home.service';
 import {RecipeComponent} from './shared/recipe/recipe.component';
-import { FooterComponent } from './shared/footer/footer.component';
+import {FooterComponent} from './shared/footer/footer.component';
 import {MatSelectModule, MatSidenav, MatSidenavContainer, MatSidenavContent, MatSidenavModule} from '@angular/material';
-import { SideMenuComponent } from './shared/side-menu/side-menu.component';
+import {SideMenuComponent} from './shared/side-menu/side-menu.component';
 import {NgHttpLoaderModule} from 'ng-http-loader/ng-http-loader.module';
 import {RestService} from './rest.service';
+import {AddRecipeComponent} from './add-recipe/add-recipe.component';
+import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import {ImageCropperModule} from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,8 @@ import {RestService} from './rest.service';
     HomeComponent,
     RecipeComponent,
     FooterComponent,
-    SideMenuComponent
+    SideMenuComponent,
+    AddRecipeComponent
   ],
   imports: [
     BrowserModule,
@@ -56,10 +60,19 @@ import {RestService} from './rest.service';
     MatSidenavModule,
     HttpClientModule,
     NgHttpLoaderModule,
+    NgMultiSelectDropDownModule.forRoot(),
+    ImageCropperModule,
     StoreModule.forRoot(rootReducer, {initialState}),
     routing
   ],
-  providers: [UserService, AuthService, AuthGuard, LocalStorageService, HomeService, RestService],
+  providers: [
+    UserService,
+    AuthService,
+    AuthGuard,
+    LocalStorageService,
+    HomeService,
+    RestService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
