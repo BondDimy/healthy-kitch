@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {RestService} from '../rest.service';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-add-recipe',
@@ -17,6 +18,8 @@ export class AddRecipeComponent implements OnInit {
 
   method: string;
   cropedFile: File;
+
+  f: any;
 
   howManyIngredients = 1;
   maxArr = [1];
@@ -53,7 +56,7 @@ export class AddRecipeComponent implements OnInit {
     allowSearchFilter: true
   };
 
-  constructor(private rest: RestService) {
+  constructor(private rest: RestService, private http: HttpClient) {
   }
 
   ngOnInit() {
@@ -192,20 +195,23 @@ export class AddRecipeComponent implements OnInit {
     this.howManyIngredients++;
     this.maxArr.push(this.maxArr.length + 1);
     this.ingredientsList.push({});
-    console.log('list', this.ingredientsList);
   }
 
   deleteIngredientFromList(index) {
-    this.ingredientsList.splice(index, 1);
-    this.howManyIngredients--;
+    if (this.howManyIngredients !== 1) {
+      this.ingredientsList.splice(index, 1);
+      this.howManyIngredients--;
+    }
   }
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
   }
 
-  imageCropped(image: string) {
+  imageCropped(image) {
+    console.log('image', image);
     this.croppedImage = image;
+    this.f = image;
   }
 
   imageLoaded() {
@@ -288,25 +294,23 @@ export class AddRecipeComponent implements OnInit {
       };
     });
 
-    console.log(typeof this.cropedFile);
+    // console.log(this.cropedFile);
 
     this.rest.apiPost('session/createRecipe', {
       defaultImageID: null,
       cuisines: this.cusinesListToPost,
       nutritionalBenefits: this.benifitsListToPost,
       dietaryCategories: this.requirmentListToPost,
-      instructions: [
-        {
-          'descText': this.method,
-          'sortID': '1'
-        }
-      ],
+      instructions: this.method,
       mealTypes: this.categoriesListToPost,
       measuredIngredients: this.ingredientsListToPost,
       name: this.recipeTitle
     }).subscribe(e => {
-      this.rest.apiPost(`api/recipes/UploadRecipeImage/${e}`, {
+
+      this.http.post(`api/recipes/UploadRecipeImage/${e}`, {
         file: this.cropedFile
+      }, {
+        headers: { 'Content-Type': 'multipart/form-data' }
       }).subscribe(re => {
         console.log(re);
       });
@@ -316,7 +320,7 @@ export class AddRecipeComponent implements OnInit {
   }
 
   imageCroppedFile($event: File) {
-    console.log('croped', $event);
+    console.log('croped file to back', $event);
     this.cropedFile = $event;
   }
 }

@@ -153,8 +153,11 @@
     </div>
 
     <div class="ingerdients__add-ingredient-btn-mob-warpper">
-      <div class="ingerdients__add-ingredient-btn-warpper" (click)="addIngredientToList()">
+      <div class="ingerdients__add-ingredient-btn-warpper mgr" (click)="addIngredientToList()">
         <i class="fa fa-plus" aria-hidden="true"></i>
+      </div>
+      <div class="ingerdients__add-ingredient-btn-warpper" (click)="deleteIngredientFromList(n)">
+        <i class="fa fa-minus" aria-hidden="true"></i>
       </div>
     </div>
 
@@ -196,14 +199,16 @@
   <image-cropper
     [imageChangedEvent]="imageChangedEvent"
     [maintainAspectRatio]="true"
-    (imageCroppedFile)="imageCroppedFile($event)"
     [aspectRatio]="1"
     [resizeToWidth]="500"
     format="png"
+    (imageCroppedFile)="imageCroppedFile($event)"
     (imageCroppedBase64)="imageCropped($event)"
     (imageLoaded)="imageLoaded()"
     (loadImageFailed)="loadImageFailed()"
   ></image-cropper>
+
+  <!--<img [src]="croppedImage" />-->
 
   <div class="submit__btn-wrapper" *ngIf="croppedImage">
     <button (click)="isModalOpen = false">ok</button>
