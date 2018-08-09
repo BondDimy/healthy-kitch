@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {RestService} from '../rest.service';
-import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-recipe',
@@ -56,7 +56,7 @@ export class AddRecipeComponent implements OnInit {
     allowSearchFilter: true
   };
 
-  constructor(private rest: RestService, private http: HttpClient) {
+  constructor(private rest: RestService, private router: Router) {
   }
 
   ngOnInit() {
@@ -294,8 +294,6 @@ export class AddRecipeComponent implements OnInit {
       };
     });
 
-    // console.log(this.cropedFile);
-
     this.rest.apiPost('session/createRecipe', {
       defaultImageID: null,
       cuisines: this.cusinesListToPost,
@@ -306,13 +304,14 @@ export class AddRecipeComponent implements OnInit {
       measuredIngredients: this.ingredientsListToPost,
       name: this.recipeTitle
     }).subscribe(e => {
-
-      this.http.post(`api/recipes/UploadRecipeImage/${e}`, {
-        file: this.cropedFile
-      }, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      }).subscribe(re => {
+      const frmData = new FormData();
+      frmData.append('file', this.cropedFile, 'RecipeImage' + e + '.png');
+      this.rest.apiPost(`api/recipes/UploadRecipeImage/${e}`, frmData).subscribe(re => {
         console.log(re);
+      }, err => {
+        if (err.status === 200) {
+          this.router.navigateByUrl('');
+        }
       });
     });
 
